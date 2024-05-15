@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import {NextUIProvider} from '@nextui-org/react'
 import App from './App.jsx'
 import './index.css'
 import { Card } from './Componentes/Card.jsx'
@@ -7,9 +8,14 @@ import { Card } from './Componentes/Card.jsx'
 
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
     <Card></Card>
+    <NextUIProvider>
+      <main className="purple-dark text-foreground bg-background">
+        <App />
+      </main>
+    </NextUIProvider>
   </React.StrictMode>,
-)
+);
