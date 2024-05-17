@@ -1,10 +1,10 @@
 
-import { Carta } from "./Componentes/Card";
+import { Cartas } from "./Componentes/Cards";
 
 export default function App() {
   return (
     <div className="container mx-auto">
-       <Carta />
+       <Cartas />
     </div>
     
   );
