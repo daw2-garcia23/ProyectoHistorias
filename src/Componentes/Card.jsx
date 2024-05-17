@@ -3,7 +3,7 @@ import { Pencil, Trash2 } from "lucide-react";
 
 export function Carta({titulo,fecha,experiencia,imagen}) {
     return (
-        <Card isFooterBlurred className=" h-[300px] w-[400px] mt-2">
+        <Card isFooterBlurred className=" h-[300px] w-[400px] m-3">
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">{titulo}</p>
           <h4 className="text-white/90 font-medium text-xl">{fecha}</h4>

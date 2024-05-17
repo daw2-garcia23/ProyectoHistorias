@@ -9,6 +9,7 @@ export function Cartas(){
     return (
         <div>
           <h1>Datos importados</h1>
+          <div className="flex">
           {data.map((item) => (
             <Carta 
             key={item.id}
@@ -19,6 +20,15 @@ export function Cartas(){
             />
           ))}
 
+          </div>
+
+          <div className="bg-success w-[50px] h-[50px] rounded-full fixed bottom-5 right-5">
+            <div className="bg-success w-[50px] h-[50px] rounded-full fixed bottom-5 right-5">
+            +
+            </div>
+            
+          </div>
+        
         </div>
       );
 }
