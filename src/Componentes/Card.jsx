@@ -1,9 +1,9 @@
 import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { Pencil, Trash2 } from "lucide-react";
 
-export function Card() {
+export function Carta() {
     return (
-        <Card isFooterBlurred className=" w-full h-[300px] col-span-12 sm:col-span-7">
+        <Card isFooterBlurred className=" h-[300px] w-[350px]">
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">VIAJE A NEPAL</p>
           <h4 className="text-white/90 font-medium text-xl">Agosto de 2024</h4>
