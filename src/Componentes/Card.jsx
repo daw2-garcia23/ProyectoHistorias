@@ -1,9 +1,10 @@
 import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { Pencil, Trash2 } from "lucide-react";
 
-export function Carta({titulo,fecha,experiencia,imagen}) {
-    return (
-        <Card isFooterBlurred className=" h-[300px] w-[400px] m-3">
+export function Carta({ titulo, fecha, experiencia, imagen }) {
+  return (
+    <div className="mx-3 mb-4 mr-4">
+      <Card isFooterBlurred className="h-[280px] w-[380px]">
         <CardHeader className="absolute z-10 top-1 flex-col items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">{titulo}</p>
           <h4 className="text-white/90 font-medium text-xl">{fecha}</h4>
@@ -20,13 +21,14 @@ export function Carta({titulo,fecha,experiencia,imagen}) {
               <p className="text-tiny text-white/60">{experiencia}</p>
             </div>
           </div>
-          <Button className=" text-tiny bg-black/20 mx-1" color="success" variant="bordered" radius="lg" size="sm">
-            <Pencil/>
-        </Button>
-        <Button className="bg-black/20  mx-1" color="danger" variant="bordered" radius="lg" size="sm">
-          <Trash2/>
-        </Button>
+          <Button className="text-tiny bg-black/20 mx-1" color="success" variant="bordered" radius="lg" size="sm">
+            <Pencil />
+          </Button>
+          <Button className="bg-black/20 mx-1" color="danger" variant="bordered" radius="lg" size="sm">
+            <Trash2 />
+          </Button>
         </CardFooter>
       </Card>
-      );
+    </div>
+  );
 }
