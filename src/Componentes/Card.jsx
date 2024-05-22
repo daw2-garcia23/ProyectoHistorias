@@ -1,7 +1,14 @@
+import { useState } from "react";
 import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { Pencil, Trash2 } from "lucide-react";
+import ModalForm from "./ModalForm";
 
 export function Carta({ titulo, fecha, experiencia, imagen }) {
+  const [ModalAbierto, setAbierto] = useState(false);
+
+  const abrirModal = () => setAbierto(true);
+  const cerrarModal = () => setAbierto(false);
+
   return (
     <div className="mx-3 mb-4 mr-4">
       <Card isFooterBlurred className="h-[280px] w-[380px]">
@@ -21,9 +28,10 @@ export function Carta({ titulo, fecha, experiencia, imagen }) {
               <p className="text-tiny text-white/60">{experiencia}</p>
             </div>
           </div>
-          <Button className="text-tiny bg-black/20 mx-1" color="success" variant="bordered" radius="lg" size="sm">
+          <Button className="text-tiny bg-black/20 mx-1" color="success" variant="bordered" radius="lg" size="sm" onPress={abrirModal}>
             <Pencil />
           </Button>
+          <ModalForm isOpen={ModalAbierto} onClose={cerrarModal} />
           <Button className="bg-black/20 mx-1" color="danger" variant="bordered" radius="lg" size="sm">
             <Trash2 />
           </Button>

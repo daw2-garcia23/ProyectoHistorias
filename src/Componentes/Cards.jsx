@@ -3,6 +3,7 @@ import { DataContext } from "./GlobalContext";
 import { Carta } from "./Card";
 import { Button } from "@nextui-org/react";
 import { Plus } from "lucide-react";
+import ModalForm from "./ModalForm";
 
 export function Cartas() {
   const { data, setData } = useContext(DataContext);
@@ -39,6 +40,7 @@ export function Cartas() {
           color="success"
           size="sm"
           onClick={handleAgregarCarta}
+          onPress={ModalForm}
         >
           <Plus />
         </Button>
