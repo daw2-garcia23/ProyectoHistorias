@@ -1,13 +1,16 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { DataContext } from "./GlobalContext";
-import { Carta } from "./Card";
 import { Button } from "@nextui-org/react";
 import { Plus } from "lucide-react";
+import ModalForm from "./ModalForm";
+import { Carta } from "./Card";
+
+
 
 export function Cartas() {
   const { data, setData } = useContext(DataContext);
 
-  const handleAgregarCarta = () => {
+  const AgregarCarta = () => {
     const nuevaCarta = {
       id: data.length + 1,
       titulo: "Nuevo Título",
@@ -20,11 +23,11 @@ export function Cartas() {
 
   return (
     <div>
-      <h1>Datos importados</h1>
       <div className="grid grid-cols-4 gap-4 ">
         {data.map((item) => (
           <div key={item.id} className="mb-4 mr-5">
             <Carta
+              id={item.id}
               titulo={item.titulo}
               fecha={item.fecha}
               experiencia={item.experiencia}
@@ -38,7 +41,8 @@ export function Cartas() {
           className="text-white text-3xl"
           color="success"
           size="sm"
-          onClick={handleAgregarCarta}
+          onClick={AgregarCarta}
+          onPress={ModalForm}
         >
           <Plus />
         </Button>
