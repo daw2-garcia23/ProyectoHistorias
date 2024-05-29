@@ -7,23 +7,36 @@ export function Dark() {
   document.documentElement.classList.toggle('dark');
 }
 
-export default function ModalForm({ isOpen, onClose }) {
+export default function ModalFormAdd({ isOpen, onClose }) {
   const { dataHistoria, setDataHistoria, data, setData } = useContext(DataContext);
+
+  const AgregarCarta = () => {
+    const nuevaCarta = {
+      id: data.length + 1,
+      titulo: dataHistoria.titulo || "Nuevo Título",
+      fecha: dataHistoria.fecha || "Nueva Fecha",
+      experiencia: dataHistoria.experiencia || "Nueva Experiencia",
+      imagen: dataHistoria.imagen || "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg",
+    };
+
+    console.log("Valores de los inputs:", dataHistoria);
+
+    setData([...data, nuevaCarta]);
+    onClose();
+  };
 
   const controladorFormHistoria = (e) => {
     const { name, value } = e.target;
-    setDataHistoria((prevDataHistoria) => {
-      const newDataHistoria = {
-        ...prevDataHistoria,
-        [name]: value
-      };
-      return newDataHistoria;
-    });
+    setDataHistoria((prevDataHistoria) => ({
+      ...prevDataHistoria,
+      [name]: value
+    }));
   };
 
   const controladorActualizaHistorias = () => {
     console.log("ID:", dataHistoria.id);
     console.log("Información de la historia:", dataHistoria);
+    // Aquí se puede añadir la lógica para actualizar el elemento en la base de datos
   };
 
   const GuardarNuevosDatos = () => {
@@ -100,8 +113,8 @@ export default function ModalForm({ isOpen, onClose }) {
             <Button color="danger" variant="flat" onPress={onClose}>
               Cerrar
             </Button>
-            <Button color="success" onPress={Actualizar}>
-              Actualizar
+            <Button color="success" onPress={AgregarCarta}>
+              Añadir
             </Button>
           </ModalFooter>
         </>
