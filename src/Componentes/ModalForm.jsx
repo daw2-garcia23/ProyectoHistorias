@@ -1,6 +1,6 @@
 import { Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, Input, Textarea } from "@nextui-org/react";
 import { SquarePen, Image, CalendarDays } from "lucide-react";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DataContext } from "./GlobalContext";
 
 export function Dark() {
@@ -9,34 +9,31 @@ export function Dark() {
 
 export default function ModalForm({ isOpen, onClose }) {
   const { dataHistoria, setDataHistoria, data, setData } = useContext(DataContext);
+  const [historiaLocal, setHistoriaLocal] = useState(dataHistoria);
+
+  useEffect(() => {
+    if (isOpen) {
+      setHistoriaLocal(dataHistoria);
+    }
+  }, [isOpen, dataHistoria]);
 
   const controladorFormHistoria = (e) => {
     const { name, value } = e.target;
-    setDataHistoria((prevDataHistoria) => {
-      const newDataHistoria = {
-        ...prevDataHistoria,
-        [name]: value
-      };
-      return newDataHistoria;
-    });
+    setHistoriaLocal((prevHistoria) => ({
+      ...prevHistoria,
+      [name]: value
+    }));
   };
 
-  const controladorActualizaHistorias = () => {
-    console.log("ID:", dataHistoria.id);
-    console.log("Información de la historia:", dataHistoria);
-  };
-
-  const GuardarNuevosDatos = () => {
+  const handleSave = () => {
     const updatedData = data.map((item) =>
-      item.id === dataHistoria.id ? dataHistoria : item
+      item.id === historiaLocal.id ? historiaLocal : item
     );
-    setData(updatedData);
-    onClose();
-  };
 
-  const Actualizar = () => {
-    controladorActualizaHistorias();
-    GuardarNuevosDatos();
+    setData(updatedData);
+    setDataHistoria(historiaLocal);
+    console.log("Datos de la historia actualizada:", historiaLocal);
+    onClose();
   };
 
   return (
@@ -47,7 +44,7 @@ export default function ModalForm({ isOpen, onClose }) {
           <ModalBody>
             <Input
               name="fecha"
-              value={dataHistoria?.fecha || ''}
+              value={historiaLocal?.fecha || ''}
               onChange={controladorFormHistoria}
               autoFocus
               endContent={<CalendarDays />}
@@ -57,7 +54,7 @@ export default function ModalForm({ isOpen, onClose }) {
             />
             <Input
               name="titulo"
-              value={dataHistoria?.titulo || ''}
+              value={historiaLocal?.titulo || ''}
               onChange={controladorFormHistoria}
               autoFocus
               endContent={<SquarePen />}
@@ -67,7 +64,7 @@ export default function ModalForm({ isOpen, onClose }) {
             />
             <Textarea
               name="experiencia"
-              value={dataHistoria?.experiencia || ''}
+              value={historiaLocal?.experiencia || ''}
               onChange={controladorFormHistoria}
               className="h-[120px]"
               autoFocus
@@ -77,7 +74,7 @@ export default function ModalForm({ isOpen, onClose }) {
             />
             <Textarea
               name="comentario"
-              value={dataHistoria?.comentario || ''}
+              value={historiaLocal?.comentario || ''}
               onChange={controladorFormHistoria}
               className="h-[120px]"
               autoFocus
@@ -87,7 +84,7 @@ export default function ModalForm({ isOpen, onClose }) {
             />
             <Input
               name="imagen"
-              value={dataHistoria?.imagen || ''}
+              value={historiaLocal?.imagen || ''}
               onChange={controladorFormHistoria}
               autoFocus
               endContent={<Image />}
@@ -100,8 +97,8 @@ export default function ModalForm({ isOpen, onClose }) {
             <Button color="danger" variant="flat" onPress={onClose}>
               Cerrar
             </Button>
-            <Button color="success" onPress={Actualizar}>
-              Actualizar
+            <Button color="success" onPress={handleSave}>
+              Guardar
             </Button>
           </ModalFooter>
         </>
