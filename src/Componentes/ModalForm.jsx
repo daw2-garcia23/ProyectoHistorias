@@ -25,15 +25,32 @@ export default function ModalForm({ isOpen, onClose }) {
     }));
   };
 
-  const handleSave = () => {
-    const updatedData = data.map((item) =>
-      item.id === historiaLocal.id ? historiaLocal : item
-    );
+  const handleSave = async () => {
+    try {
+      const response = await fetch(`https://json-server-historias.vercel.app/historias/${historiaLocal.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(historiaLocal),
+      });
 
-    setData(updatedData);
-    setDataHistoria(historiaLocal);
-    console.log("Datos de la historia actualizada:", historiaLocal);
-    onClose();
+      if (!response.ok) {
+        throw new Error('Error en la actualización de la historia');
+      }
+
+      const updatedHistoria = await response.json();
+      const updatedData = data.map((item) =>
+        item.id === updatedHistoria.id ? updatedHistoria : item
+      );
+
+      setData(updatedData);
+      setDataHistoria(updatedHistoria);
+      console.log("Datos de la historia actualizada:", updatedHistoria);
+      onClose();
+    } catch (error) {
+      console.error('Error al actualizar la historia:', error);
+    }
   };
 
   return (
