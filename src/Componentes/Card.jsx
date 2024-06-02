@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { Pencil, Trash2 } from "lucide-react";
 import { DataContext } from "./GlobalContext";
+import ModalForm from "./ModalForm"; // Importa el componente ModalForm
 
 export function Carta({ id, titulo, fecha, experiencia, imagen }) {
   const [ModalAbierto, setAbierto] = useState(false);
@@ -63,6 +64,7 @@ export function Carta({ id, titulo, fecha, experiencia, imagen }) {
           >
             <Pencil />
           </Button>
+          <ModalForm isOpen={ModalAbierto} onClose={cerrarModal} /> 
           <Button
             className="bg-black/20 mx-1"
             color="danger"
