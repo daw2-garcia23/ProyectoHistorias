@@ -5,7 +5,7 @@ const DataContext = createContext();
 
 // Crea un proveedor de datos
 const DataProvider = ({ children }) => {
-  const [data, setData] = useState(dataHistorias.historias);
+  const [data, setData] = useState();
   const [dataHistoria, setDataHistoria] = useState()
 
   return (

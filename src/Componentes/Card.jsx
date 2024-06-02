@@ -10,16 +10,15 @@ export function Carta({ id, titulo, fecha, experiencia, imagen }) {
 
   const abrirModal = () => setAbierto(true);
   const cerrarModal = () => setAbierto(false);
-  
 
   const controladorEditarHistoria = () => {
     setDataHistoria({ id, titulo, fecha, experiencia, imagen });
     abrirModal();
   };
 
-  const controladorBorrarHistoriaHistoria = () => {
-    setDataHistoria({ id, titulo, fecha, experiencia, imagen });
-    console.log('Has eliminado esta historia: ', id)
+  const controladorBorrarHistoria = () => {
+    // Lógica para borrar historia
+    console.log('Has eliminado esta historia: ', id);
   };
 
   return (
@@ -58,7 +57,7 @@ export function Carta({ id, titulo, fecha, experiencia, imagen }) {
             variant="bordered"
             radius="lg"
             size="sm"
-            onPress={controladorBorrarHistoriaHistoria}
+            onPress={controladorBorrarHistoria}
           >
             <Trash2 />
           </Button>
