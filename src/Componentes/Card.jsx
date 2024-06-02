@@ -1,12 +1,11 @@
 import { useState, useContext } from "react";
 import { Button, Card, CardFooter, CardHeader, Image } from "@nextui-org/react";
 import { Pencil, Trash2 } from "lucide-react";
-import ModalForm from "./ModalForm";
 import { DataContext } from "./GlobalContext";
 
 export function Carta({ id, titulo, fecha, experiencia, imagen }) {
   const [ModalAbierto, setAbierto] = useState(false);
-  const { setDataHistoria } = useContext(DataContext);
+  const { setDataHistoria, data, setData } = useContext(DataContext);
 
   const abrirModal = () => setAbierto(true);
   const cerrarModal = () => setAbierto(false);
@@ -16,9 +15,23 @@ export function Carta({ id, titulo, fecha, experiencia, imagen }) {
     abrirModal();
   };
 
-  const controladorBorrarHistoria = () => {
-    // Lógica para borrar historia
-    console.log('Has eliminado esta historia: ', id);
+  const controladorBorrarHistoria = async () => {
+    try {
+      const response = await fetch(`https://json-server-historias.vercel.app/historias/${id}`, {
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        throw new Error('Error al eliminar la historia');
+      }
+
+      console.log('Has eliminado esta historia:', id);
+
+      const updatedData = data.filter((item) => item.id !== id);
+      setData(updatedData);
+    } catch (error) {
+      console.error('Error al eliminar la historia:', error);
+    }
   };
 
   return (
@@ -50,7 +63,6 @@ export function Carta({ id, titulo, fecha, experiencia, imagen }) {
           >
             <Pencil />
           </Button>
-          <ModalForm isOpen={ModalAbierto} onClose={cerrarModal} />
           <Button
             className="bg-black/20 mx-1"
             color="danger"

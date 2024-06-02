@@ -10,19 +10,35 @@ export function Dark() {
 export default function ModalFormAdd({ isOpen, onClose }) {
   const { dataHistoria, setDataHistoria, data, setData } = useContext(DataContext);
 
-  const AgregarCarta = () => {
-    const nuevaCarta = {
-      id: data.length + 1,
-      titulo: dataHistoria.titulo || "Nuevo Título",
-      fecha: dataHistoria.fecha || "Nueva Fecha",
-      experiencia: dataHistoria.experiencia || "Nueva Experiencia",
-      imagen: dataHistoria.imagen || "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg",
-    };
+  const AgregarCarta = async () => {
+    try {
+      const nuevaCarta = {
+        titulo: dataHistoria.titulo || "Nuevo Título",
+        fecha: dataHistoria.fecha || "Nueva Fecha",
+        experiencia: dataHistoria.experiencia || "Nueva Experiencia",
+        imagen: dataHistoria.imagen || "https://blog.localadventures.mx/wp-content/uploads/2023/04/hermosas-montanas-ratchaprapha-dam-parque-nacional-khao-sok-provincia-surat-thani-tailandia-scaled.jpg",
+      };
 
-    console.log("Valores de los inputs:", dataHistoria);
+      const response = await fetch('https://json-server-historias.vercel.app/historias', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(nuevaCarta),
+      });
 
-    setData([...data, nuevaCarta]);
-    onClose();
+      if (!response.ok) {
+        throw new Error('Error al añadir la carta');
+      }
+
+      const nuevaCartaResponse = await response.json();
+      console.log("Carta añadida:", nuevaCartaResponse);
+
+      setData([...data, nuevaCartaResponse]);
+      onClose();
+    } catch (error) {
+      console.error('Error al añadir la carta:', error);
+    }
   };
 
   const controladorFormHistoria = (e) => {
@@ -31,25 +47,6 @@ export default function ModalFormAdd({ isOpen, onClose }) {
       ...prevDataHistoria,
       [name]: value
     }));
-  };
-
-  const controladorActualizaHistorias = () => {
-    console.log("ID:", dataHistoria.id);
-    console.log("Información de la historia:", dataHistoria);
-    // Aquí se puede añadir la lógica para actualizar el elemento en la base de datos
-  };
-
-  const GuardarNuevosDatos = () => {
-    const updatedData = data.map((item) =>
-      item.id === dataHistoria.id ? dataHistoria : item
-    );
-    setData(updatedData);
-    onClose();
-  };
-
-  const Actualizar = () => {
-    controladorActualizaHistorias();
-    GuardarNuevosDatos();
   };
 
   return (
